@@ -7,7 +7,7 @@ import Body from './components/Body';
 // import Contact from './components/Contact';
 // import Instamart from './components/Instamart';
 // import Cart from './components/Cart';
-// import RestaurantMenu from './components/RestaurantMenu';
+import RestaurantMenu from './components/RestaurantMenu';
 import Error from './components/Error';
 import { Provider } from 'react-redux';
 import store from './utils/store';
@@ -17,7 +17,7 @@ import SearchRestaurants from './components/SearchRestaurants';
 
 
 // const About = lazy(() => import('./components/About'))
-// const Help = lazy(() => import('./components/Help'))
+const Help = lazy(() => import('./components/Help'))
 const App = () => {
     return (
         <Provider store={store}>
@@ -45,10 +45,10 @@ const appRouter = createBrowserRouter([
         //         path: "/contact",
         //         element: <Contact />
         //     },
-        //     {
-        //         path: "/restaurant/:resId",
-        //         element: <RestaurantMenu />
-        //     },
+            {
+                path: "/restaurant/:resId",
+                element: <RestaurantMenu />
+            },
         //     {
         //         path: "/instamart",
         //         element: <Instamart />
@@ -61,10 +61,10 @@ const appRouter = createBrowserRouter([
                 path: "/offers",
                 element: <MainRestaurantList />
             },
-        //     {
-        //         path: "/help",
-        //         element: <Suspense><Help /></Suspense>
-        //     },
+            {
+                path: "/help",
+                element: <Suspense><Help /></Suspense>
+            },
             {
                 path: "/search",
                 element: <SearchRestaurants />,

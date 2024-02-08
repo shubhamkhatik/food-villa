@@ -32,7 +32,7 @@ const MainRestaurantList = () => {
         >
           {filteredRestaurants?.length === undefined || null ? (
             <>
-              <h1>No Restaurant Found</h1>
+              <h1 className="text-red-700">No Restaurant Found</h1>
             </>
           ) : (
             filteredRestaurants &&
