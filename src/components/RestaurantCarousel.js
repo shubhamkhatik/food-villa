@@ -29,7 +29,7 @@ const RestaurantCarousel = (restaurants) => {
     <>
     <h2 className='font-bold text-2xl pb-4'>Top restaurant chains in Bangalore</h2>
       <Carousel responsive={responsive}>
-        {restaurants.data.map((data) => (
+        {restaurants?.data.map((data) => (
           <div key={data.info.id} className='pr-8'>
             <Link 
             to={"/restaurant/" + data.info.id}

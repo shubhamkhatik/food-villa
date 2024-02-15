@@ -4,7 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { IMG_CDN_URL } from '../constants';
 
 const ItemCarousel = (items) => {
-    // console.log(items.data)
+  console.log("item courosel child",items);
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -28,7 +28,7 @@ const ItemCarousel = (items) => {
     <>
     <h2 className='font-bold text-2xl my-4'>Hey, what's on your mind?</h2>
       <Carousel responsive={responsive}>
-        {items.data.map((data) => (
+        {items?.data.map((data) => (
           <div key={data.id} className='pr-6 block cursor-pointer'>
             <img
               src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${data.imageId}`}

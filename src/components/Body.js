@@ -10,9 +10,9 @@ import ButtonList from "./ButtonList";
 import ShimmerCursor from "./ShimmerCursor";
 
 const Body = () => {
-  console.log("start")
   const [Loading, setLoading] = useState(false);
   const [page, setPage] = useState(10);
+
   const {
     carousel,
     allRestaurants,
@@ -95,8 +95,6 @@ const Body = () => {
   };
 
   useEffect(() => {
-  console.log("start scroll")
-
     window.addEventListener("scroll", handelInfiniteScroll);
     return () => window.removeEventListener("scroll", handelInfiniteScroll);
   }, []);
@@ -144,7 +142,6 @@ const Body = () => {
           className="grid grid-cols-1 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-8 mt-8"
           data-testid="res-list"
         >
-          {/* You have to write logic for NO restraunt fount here */}
           {filteredRestaurants &&
             filteredRestaurants.map((restaurant) => {
               return (

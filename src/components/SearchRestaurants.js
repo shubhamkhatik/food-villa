@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ItemCarousel from "./ItemCarousel";
 import { useEffect } from "react";
 import SearchSuggestionsCard from "./SearchSuggestionsCard";
 import {
