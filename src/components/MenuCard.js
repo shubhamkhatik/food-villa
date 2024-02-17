@@ -1,20 +1,19 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { addItem } from "../utils/cartSlice";
 import { IMG_CDN_URL } from "../constants";
 
 const MenuCard = ({ ItemDetails }) => {
-  const { imageId, name, defaultPrice, price, description, itemAttribute } =
-    ItemDetails;
-  // console.log(name)
-  //adding for cart
+  const { imageId, name, defaultPrice, price, description, id } = ItemDetails;
+  const cartItems = useSelector((store) => store.cart.items);
+  const currentItem = cartItems.find((cartItem) => id === cartItem.id);
+
   const dispatch = useDispatch();
   const addFoodItem = (item) => {
     dispatch(addItem(item));
   };
   return (
-    <div>
-      {/* <h1>{name}</h1> */}
+    <>
       <div className="flex justify-between">
         <div>
           <div>
@@ -39,18 +38,27 @@ const MenuCard = ({ ItemDetails }) => {
             alt="menuItem"
           />
           <div className="absolute inset-0 left-1/2 top-20 -translate-x-1/2 grid item-center w-20 md:w-24 h-9 rounded-lg text-sm font-semibold bg-white text-center border shadow-md">
-            <button
-              data-testid="addBtn"
-              className=" text-[#60b246] w-full g-full cursor-pointer"
-              onClick={() => addFoodItem(ItemDetails)}
-            >
-              Add
-            </button>
+            {!currentItem ? (
+              <button
+                data-testid="addBtn"
+                className=" text-[#60b246] w-full g-full cursor-pointer"
+                onClick={() => addFoodItem(ItemDetails)}
+              >
+                Add
+              </button>
+            ) : (
+              <button
+                data-testid="addBtn"
+                className=" text-[#4a7dbe] w-full g-full"
+              >
+                Added
+              </button>
+            )}
           </div>
         </div>
       </div>
       <div className="border-b my-5"></div>
-    </div>
+    </>
   );
 };
 
