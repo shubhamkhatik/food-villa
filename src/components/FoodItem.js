@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../constants";
-import { addItem, clearCart, decreamentItem } from "../utils/cartSlice";
+import { addItem, clearCart, decreamentItem, updateAmount } from "../utils/cartSlice";
+import { Link } from "react-router-dom";
 
 const FoodItem = () => {
   const cartItems = useSelector((store) => store.cart.items);
@@ -24,6 +25,7 @@ const FoodItem = () => {
       (sum, current) => sum + current.price * current.quantity,
       0.0
     );
+    disptach(updateAmount(total));
     return total;
   };
   const handleClearCart = () => {
@@ -84,6 +86,14 @@ const FoodItem = () => {
         <div className="flex justify-between pt-2 font-bold">
           <span className="text-xl">Total</span>
           <span className="text-xl">&#8377;{(getTotal() + 0.0) / 100}</span>
+        </div>
+        <div>
+          <Link to="/payment">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Proceed to Pay
+          </button>
+          </Link>
+          
         </div>
       </div>
     </div>
