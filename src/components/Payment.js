@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Payment = () => {
+  const [loading, setLoading] = useState(false);
   const Amount = useSelector((store) => store.cart.amount);
   const cartAmount = Amount / 100;
 
@@ -14,18 +16,36 @@ const Payment = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your logic to handle the form submission (e.g., payment processing)
-    console.log("Form submitted:", formData);
+  const data = {
+    name: "hitesh",
+    amount: 1,
+    number: "9356735501",
+    MUID: "MUID" + Date.now(),
+    transactionId: "T" + Date.now(),
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    axios
+      .post("api/payment", data)
+      .then((res) => {
+        console.log("res", res.json());
+
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(error);
+      });
+  };
   return (
     <div className="container mx-auto mt-8 max-w-md   bg-gradient-to-br from-yellow-300 via-green-400 to-blue-400 rounded p-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-gradient-to-br from-yellow-300 via-green-400 to-blue-400 rounded p-4"
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-gradient-to-br from-yellow-300 via-green-400 to-blue-400  p-4"
       >
         <div className="mb-4">
           <label
@@ -87,12 +107,18 @@ const Payment = () => {
           />
         </div>
         <div className="flex items-center justify-center">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Pay
-          </button>
+          {!loading ? (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Pay
+            </button>
+          ) : (
+            <button className="bg-neutral-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Wait Bro....
+            </button>
+          )}
         </div>
       </form>
     </div>

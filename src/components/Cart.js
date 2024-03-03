@@ -8,10 +8,10 @@ const Cart = () => {
 
   return (
     <div>
-      {cartItems.length !== 0 ? (
+      {/* {cartItems.length !== 0 ? ( */}
         <FoodItem />
-      ) : (
-        <div className="w-100% md:h-[calc(100vh-80px)] flex items-center flex-col justify-center my-0 mx-auto text-center">
+      {/* ) : ( */}
+        {/* <div className="w-100% md:h-[calc(100vh-80px)] flex items-center flex-col justify-center my-0 mx-auto text-center">
           <div className="w-96">
             <img
               src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0"
@@ -26,7 +26,7 @@ const Cart = () => {
             <Link to="/">See Restaurants Near You</Link>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

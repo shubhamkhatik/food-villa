@@ -5,6 +5,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 const FoodCarousel = (carousel) => {
+ if(!carousel.length) return;
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -29,7 +30,7 @@ const FoodCarousel = (carousel) => {
     <>
       <h2 className="font-bold text-2xl my-4">Best offers for you</h2>
       <Carousel responsive={responsive}>
-        {carousel.data.map((data) => (
+        {carousel?.data.map((data) => (
           <div key={data.id} className="px-2 cursor-pointer">
             <img
               src={IMG_CDN_URL + data.imageId}

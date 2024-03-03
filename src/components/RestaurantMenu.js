@@ -10,8 +10,6 @@ import Shimmer from "./Shimmer";
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const { restaurantInfo, restaurantMenu } = useRestaurantMenu(resId);
-  console.log("ok1",restaurantInfo);
-  console.log("ok2",restaurantMenu);
 
   if (!restaurantInfo || !restaurantMenu) {
     return (

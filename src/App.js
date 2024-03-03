@@ -12,6 +12,8 @@ import store from "./utils/store";
 import MainRestaurantList from "./components/MainRestaurantList";
 import SearchRestaurants from "./components/SearchRestaurants";
 import Payment from "./components/Payment";
+import Success from "./components/phonepe/success";
+import Failure from "./components/phonepe/failure";
 
 const Help = lazy(() => import("./components/Help"));
 const App = () => {
@@ -50,6 +52,14 @@ const appRouter = createBrowserRouter([
       {
         path: "/offers",
         element: <MainRestaurantList />,
+      },
+      {
+        path: "/success",
+        element: <Success />,
+      },
+      {
+        path: "/failure",
+        element: <Failure />,
       },
       {
         path: "/help",
