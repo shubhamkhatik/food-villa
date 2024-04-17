@@ -5,7 +5,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 const FoodCarousel = (carousel) => {
- if(!carousel.length) return;
+  if(!carousel.length) return;
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.

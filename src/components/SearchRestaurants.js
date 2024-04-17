@@ -37,8 +37,7 @@ const SearchRestaurants = () => {
 
   const getSearchItemFoods = async () => {
     const data = await fetch(
-      "https://corsproxy.org/?https%3A%2F%2Fwww.swiggy.com%2Fdapi%2Flanding%2FPRE_SEARCH%3Flat%3D12.9715987%26lng%3D77.5945627"
-    );
+      "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/landing/PRE_SEARCH?lat=19.07480&lng=72.88560")
     const json = await data.json();
     setFood(json?.data?.cards[1]?.card?.card?.imageGridCards?.info);
   };
@@ -57,10 +56,9 @@ const SearchRestaurants = () => {
 
   const getSearchSuggestions = async () => {
     const data = await fetch(
-      "https://corsproxy.org/?" +
-        encodeURIComponent(
-          `https://www.swiggy.com/dapi/restaurants/search/suggest?lat=12.9715987&lng=77.5945627&str=${searchText}&trackingId=undefined`
-        )
+    
+          `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/search/suggest?lat=12.9715987&lng=77.5945627&str=${searchText}&trackingId=undefined`
+        
     );
 
     const json = await data.json();
@@ -75,10 +73,7 @@ const SearchRestaurants = () => {
 
   const getSearchByRes = async () => {
     const data = await fetch(
-      "https://corsproxy.org/?" +
-        encodeURIComponent(
-          `https://www.swiggy.com/dapi/restaurants/search/v3?lat=12.9715987&lng=77.5945627&str=${searchName}&trackingId=undefined&submitAction=SUGGESTION&queryUniqueId=bc9bbc65-5d8b-0aa5-bbdc-65b467e6afdb`
-        )
+      `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/search/v3?lat=12.9715987&lng=77.5945627&str=${searchName}&trackingId=undefined&submitAction=SUGGESTION&queryUniqueId=bc9bbc65-5d8b-0aa5-bbdc-65b467e6afdb`
     );
     const json = await data.json();
     if (isDish === "RESTAURANT") {
@@ -202,7 +197,6 @@ const SearchRestaurants = () => {
         ) : (
           <ul>
             <div className="flex gap-2 text-sm font-medium mb-1">
-              <h1>hello dhddhdh</h1>
               <h1
                 className={
                   isDish === "RESTAURANT"

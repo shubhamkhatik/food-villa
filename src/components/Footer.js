@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <div className="hidden md:flex min-h-[104px] bg-gray-200 mt-6 items-center justify-center ">
+      <div className="hidden md:flex min-h-[104px] bg-gray-200 mt-28 items-center justify-center ">
         <h1 className="md:w-72 md:mr-12 text-2xl font-extrabold my-auto lg:w-[408px] mr-24">
           For better experience,download the Swiggy app now
         </h1>

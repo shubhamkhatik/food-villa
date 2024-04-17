@@ -14,6 +14,7 @@ import SearchRestaurants from "./components/SearchRestaurants";
 import Payment from "./components/Payment";
 import Success from "./components/phonepe/success";
 import Failure from "./components/phonepe/failure";
+import { Orders } from "./components/Orders";
 
 const Help = lazy(() => import("./components/Help"));
 const App = () => {
@@ -50,6 +51,10 @@ const appRouter = createBrowserRouter([
         element: <Payment />,
       },
       {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
         path: "/offers",
         element: <MainRestaurantList />,
       },
@@ -58,7 +63,7 @@ const appRouter = createBrowserRouter([
         element: <Success />,
       },
       {
-        path: "/failure",
+        path: "/error-page",
         element: <Failure />,
       },
       {

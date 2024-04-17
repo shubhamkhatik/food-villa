@@ -1,50 +1,53 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addOrder } from "../utils/orderSlice";
+import { clearCart } from "../utils/cartSlice";
 
 const Payment = () => {
+  const cartData= useSelector((store) => store.cart);
+  const dispatch =useDispatch()
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const Amount = useSelector((store) => store.cart.amount);
-  const cartAmount = Amount / 100;
 
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
+    contact: "",
     address: "",
-    amount: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const data = {
-    name: "hitesh",
-    amount: 1,
-    number: "9356735501",
-    MUID: "MUID" + Date.now(),
-    transactionId: "T" + Date.now(),
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const amount = 500;
+    setLoading(true);
+    const amount = Amount;
     const currency = "INR";
-    const receiptId ="Raz"+ Date.now();
-  
-  
-      const response = await fetch("https://razorpay-swiggy.onrender.com/order", {
-        method: "POST",
-        body: JSON.stringify({
-          amount,
-          currency,
-          receipt: receiptId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const receiptId = "Raz" + Date.now();
+
+    try {
+      const response = await fetch(
+        "https://razorpay-swiggy.onrender.com/order",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            amount,
+            currency,
+            receipt: receiptId,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const order = await response.json();
-      console.log("order=>",order);
-  
+      console.log("order=>", order);
+      setLoading(false);
+
       var options = {
         key: "rzp_test_13wQJzMWMgzywK", // Enter the Key ID generated from the Dashboard
         amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -53,11 +56,12 @@ const Payment = () => {
         description: "Test Transaction",
         image: "https://example.com/your_logo",
         order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        
         handler: async function (response) {
           const body = {
             ...response,
           };
-  
+
           const validateRes = await fetch(
             "https://razorpay-swiggy.onrender.com/order/validate",
             {
@@ -69,13 +73,23 @@ const Payment = () => {
             }
           );
           const jsonRes = await validateRes.json();
-          console.log("jsonRes",jsonRes);
+          console.log("jsonRes", jsonRes);
+          if(jsonRes){
+            const currentTime = new Date();
+            const orderData={
+              orderData:cartData,
+              time: currentTime
+            }
+            dispatch(addOrder(orderData))
+            dispatch(clearCart());
+            navigate("/orders");
+          }
         },
         prefill: {
           //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-          name: "shubham Matrix", //your customer's name
-          email: "shubham@example.com",
-          contact: "9604567895", //Provide the customer's phone number for better conversion rates
+          name: formData.name, //your customer's name
+          email: formData.email,
+          contact: formData.contact, //Provide the customer's phone number for better conversion rates
         },
         notes: {
           address: "Razorpay Corporate Office",
@@ -85,7 +99,10 @@ const Payment = () => {
         },
       };
       var rzp1 = new window.Razorpay(options);
+     
       rzp1.on("payment.failed", function (response) {
+
+        navigate("/error-page");
         alert(response.error.code);
         alert(response.error.description);
         alert(response.error.source);
@@ -95,9 +112,13 @@ const Payment = () => {
         alert(response.error.metadata.payment_id);
       });
       rzp1.open();
-    };
-  
-  
+     
+      
+    } catch (error) {
+      navigate("/error-page");
+    }
+  };
+
   return (
     <div className="container mx-auto mt-8 max-w-md   bg-gradient-to-br from-yellow-300 via-green-400 to-blue-400 rounded p-4">
       <form
@@ -127,6 +148,46 @@ const Payment = () => {
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline
+            bg-gradient-to-r from-purple-300 to-pink-400 
+            "
+            id="email"
+            type="text"
+            placeholder="Enter your email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Contact
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline
+            bg-gradient-to-r from-purple-300 to-pink-400 
+            "
+            id="contact"
+            type="text"
+            placeholder="Enter your contact"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="address"
           >
             Address
@@ -144,25 +205,7 @@ const Payment = () => {
             required
           />
         </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="amount"
-          >
-            Amount
-          </label>
-          <input
-            //bgcolor added from plugin tailwind css
-            className=" number-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="amount"
-            type="number"
-            placeholder="Enter the amount"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-            required
-          />
-        </div>
+
         <div className="flex items-center justify-center">
           {!loading ? (
             <button

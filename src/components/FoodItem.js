@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../constants";
-import { addItem, clearCart, decreamentItem, updateAmount } from "../utils/cartSlice";
+import {
+  addItem,
+  clearCart,
+  decreamentItem,
+  updateAmount,
+} from "../utils/cartSlice";
 import { Link } from "react-router-dom";
 
 const FoodItem = () => {
@@ -36,7 +41,7 @@ const FoodItem = () => {
     <div className="w-100% sm:h-[calc(100vh-80px)] flex md:items-center flex-col justify-center my-0 mx-auto md:text-center">
       <div
         className={` ${
-          0 && !cartItems.length && "hidden"
+          !cartItems.length && "hidden"
         }  h-fit m-8 p-8 bg-white shadow-md font-poppins text-sm flex flex-col`}
       >
         <div className="flex justify-between mb-5 border-b-2 ">
@@ -89,11 +94,10 @@ const FoodItem = () => {
         </div>
         <div>
           <Link to="/payment">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Proceed to Pay
-          </button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Proceed to Pay
+            </button>
           </Link>
-          
         </div>
       </div>
     </div>

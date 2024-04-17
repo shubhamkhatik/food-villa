@@ -3,7 +3,7 @@ import React from 'react'
 const Failure = () => {
     
     return (
-        <div className="container">
+        <div className="container bg-orange-700">
           <div className="row justify-content-center">
             <div className="col-md-6 text-center">
                 <div className="alert alert-danger text-center">

@@ -8,6 +8,8 @@ import RestaurantCarousel from "./RestaurantCarousel";
 import ItemCarousel from "./ItemCarousel";
 import ButtonList from "./ButtonList";
 import ShimmerCursor from "./ShimmerCursor";
+import { scrollApi } from "../constants";
+
 
 const Body = () => {
   const [Loading, setLoading] = useState(false);
@@ -26,13 +28,11 @@ const Body = () => {
   async function getRestaurantMore() {
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/update",
+      const response = await fetch(scrollApi,
         {
-          method: "POST", // Use POST for fetching more restaurants
+          method: "POST", 
           headers: {
             "Content-Type": "application/json",
-            // Add any additional headers here
           },
           body: JSON.stringify({
             lat: 12.9715987,
@@ -56,7 +56,7 @@ const Body = () => {
         }
       );
       const data = await response.json();
-      //    console.log(data.data.cards[0].card.card.gridElements.infoWithStyle.restaurants);
+      console.log("hi scroll",data)
       if (allRestaurants) {
         let newRestaurants =
           data.data.cards[0].card.card.gridElements.infoWithStyle.restaurants;
@@ -90,6 +90,8 @@ const Body = () => {
         document.documentElement.scrollHeight
       ) {
         setPage((prev) => prev + 15);
+      console.log("hi page",data)
+
       }
     } catch (error) {}
   };
@@ -115,7 +117,7 @@ const Body = () => {
   ) : (
     <>
       <div className="mx-8 sm:mx-14 md:mx-24 lg:mx-44 pb-4">
-        {/* className=" bg-[#171a29]" */}
+        
         {carousel && <FoodCarousel data={carousel} />}
       </div>
 

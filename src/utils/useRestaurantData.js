@@ -19,7 +19,7 @@ const useRestaurantData = () => {
 
     const json = await data.json();
     if (window.innerWidth < 1024) {
-      setCarousel(FOOD_CAROUSEL?.imageGridCards);
+      setCarousel(FOOD_CAROUSEL?.imageGridCards.info);
       setAllRestaurants(RESTAURANT_DATA?.restaurants);
       setFilteredRestaurants(RESTAURANT_DATA?.restaurants);
       setItemCarousel(ITEM_CAROUSEL?.card?.card?.imageGridCards?.info);
@@ -28,7 +28,9 @@ const useRestaurantData = () => {
           ?.restaurants
       );
     } else {
-      setCarousel(json?.data?.cards[0]?.card?.card?.imageGridCards?.info);
+      setCarousel(FOOD_CAROUSEL?.imageGridCards.info);
+
+      // setCarousel(json?.data?.cards[0]?.card?.card?.imageGridCards?.info);
       setItemCarousel(json?.data?.cards[0]?.card?.card?.imageGridCards?.info);
 
       setRestaurantCarousel(

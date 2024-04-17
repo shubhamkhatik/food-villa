@@ -17,6 +17,7 @@ const useRestaurantMenu = (resId) => {
     if (window.innerWidth >= 1024) {
       data = await fetch(FETCH_MENU_URL + resId);
       json = await data.json();
+      console.log("okok",json)
       menuData = json?.data?.cards[4].groupedCard?.cardGroupMap?.REGULAR?.cards;
     } else {
       data = await fetch(FETCH_MENU_URL_MOBILE);
