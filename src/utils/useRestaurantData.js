@@ -16,6 +16,7 @@ const useRestaurantData = () => {
 
   async function getRestaurants() {
     const data = await fetch(Resturant_Data_URL);
+    console.log("data", data);
 
     const json = await data.json();
     if (window.innerWidth < 1024) {

@@ -2,8 +2,6 @@ import React from 'react'
 import { IMG_CDN_URL } from '../constants'
 
 const SearchSuggestionsCard = ({cloudinaryId, text, type}) => {
-    // const {cloudinaryId, text, type} = data;
-    // console.log(text)
   return (
     <div className='flex pt-4 ml-2 items-center cursor-pointer hover:bg-gray-100 transition duration-300'>
         <div>

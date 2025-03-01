@@ -5,7 +5,6 @@ import RestaurantCard from './RestaurantCard';
 import { Link } from 'react-router-dom';
 
 const RestaurantCarousel = (restaurants) => {
-    // console.log(restaurants.data)
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.

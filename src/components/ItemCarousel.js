@@ -4,7 +4,6 @@ import 'react-multi-carousel/lib/styles.css';
 import { IMG_CDN_URL } from '../constants';
 
 const ItemCarousel = (items) => {
-  console.log("item courosel child",items);
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.

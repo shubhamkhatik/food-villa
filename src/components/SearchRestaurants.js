@@ -23,9 +23,6 @@ const SearchRestaurants = () => {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const searchName = searchParam.get("query");
-  console.log(searchName);
-  console.log(searchText);
-  console.log(searchText === searchName);
 
   const handleClick = (name, type) => {
     setSearchText(name);

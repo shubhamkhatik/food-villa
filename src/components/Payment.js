@@ -45,7 +45,6 @@ const Payment = () => {
         }
       );
       const order = await response.json();
-      console.log("order=>", order);
       setLoading(false);
 
       var options = {
@@ -73,7 +72,6 @@ const Payment = () => {
             }
           );
           const jsonRes = await validateRes.json();
-          console.log("jsonRes", jsonRes);
           if(jsonRes){
             const currentTime = new Date();
             const orderData={

@@ -10,9 +10,20 @@ import ButtonList from "./ButtonList";
 import ShimmerCursor from "./ShimmerCursor";
 import { scrollApi } from "../constants";
 
+// Throttle function to limit API calls
+const throttle = (callback, delay) => {
+  let lastCall = 0;
+  return (...args) => {
+    const now = new Date().getTime();
+    if (now - lastCall >= delay) {
+      lastCall = now;
+      callback(...args);
+    }
+  };
+};
 
 const Body = () => {
-  const [Loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(10);
 
   const {
@@ -28,47 +39,28 @@ const Body = () => {
   async function getRestaurantMore() {
     setLoading(true);
     try {
-      const response = await fetch(scrollApi,
-        {
-          method: "POST", 
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            lat: 12.9715987,
-            lng: 77.5945627,
-            nextOffset: "COVCELQ4KID4ruup+9+KczCnEzgD", // Use the correct nextOffset value
-            // Other payload parameters if needed
-            seoParams: {
-              apiName: "FoodHomePage",
-              pageType: "FOOD_HOMEPAGE",
-              seoUrl: "https://www.swiggy.com/",
-            },
-            widgetOffset: {
-              // Include your widgetOffset values here
-              NewListingView_Topical_Fullbleed: "",
-              NewListingView_category_bar_chicletranking_TwoRows: "",
-              NewListingView_category_bar_chicletranking_TwoRows_Rendition: "",
-              collectionV5RestaurantListWidget_SimRestoRelevance_food_seo:
-                String(page),
-            },
-          }),
-        }
-      );
+      const response = await fetch(scrollApi, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lat: 12.9715987,
+          lng: 77.5945627,
+          nextOffset: "COVCELQ4KID4ruup+9+KczCnEzgD",
+          page: page, 
+        }),
+      });
+
       const data = await response.json();
-      console.log("hi scroll",data)
+      console.log("API Response:", data);
+
       if (allRestaurants) {
         let newRestaurants =
           data.data.cards[0].card.card.gridElements.infoWithStyle.restaurants;
 
-        setFilteredRestaurants((prevRestaurants) => [
-          ...prevRestaurants,
-          ...newRestaurants,
-        ]);
-        setAllRestaurants((prevRestaurants) => [
-          ...prevRestaurants,
-          ...newRestaurants,
-        ]);
+        setFilteredRestaurants((prev) => [...prev, ...newRestaurants]);
+        setAllRestaurants((prev) => [...prev, ...newRestaurants]);
       }
     } catch (error) {
       console.error("Error fetching restaurants:", error);
@@ -78,23 +70,22 @@ const Body = () => {
   }
 
   useEffect(() => {
-    if (page > 10) {
+    if (page > 10 && !loading) {
       getRestaurantMore();
     }
   }, [page]);
 
-  const handelInfiniteScroll = async () => {
-    try {
-      if (
-        window.innerHeight + document.documentElement.scrollTop + 1 >=
-        document.documentElement.scrollHeight
-      ) {
-        setPage((prev) => prev + 15);
-      console.log("hi page",data)
+  // Throttled infinite scroll function
+  const handelInfiniteScroll = throttle(() => {
+    if (loading) return; 
 
-      }
-    } catch (error) {}
-  };
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 200 >=
+      document.documentElement.scrollHeight
+    ) {
+      setPage((prev) => prev + 1);
+    }
+  }, 1000); // Calls API at most once per 500ms
 
   useEffect(() => {
     window.addEventListener("scroll", handelInfiniteScroll);
@@ -117,7 +108,6 @@ const Body = () => {
   ) : (
     <>
       <div className="mx-8 sm:mx-14 md:mx-24 lg:mx-44 pb-4">
-        
         {carousel && <FoodCarousel data={carousel} />}
       </div>
 
@@ -158,7 +148,7 @@ const Body = () => {
             })}
         </div>
       </div>
-      {Loading && <Shimmer />}
+      {loading && <Shimmer />}
     </>
   );
 };

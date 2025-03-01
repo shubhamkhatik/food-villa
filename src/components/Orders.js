@@ -7,6 +7,24 @@ export const Orders = () => {
 
   return (
     <div className="mx-8 flex flex-col sm:mx-14 md:mx-24 lg:mx-44 pb-4 my-3">
+      {
+        orderItems.length === 0 && (
+          <div className="w-100% md:h-[calc(100vh-80px)] flex items-center flex-col justify-center my-0 mx-auto text-center">
+            <div className="w-96">
+              <img
+                src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0"
+                alt=""
+              />
+            </div>
+            <div className="mt-6 text-base font-semibold">
+             NO any current orders
+            </div>
+            <div className="mt-2">
+              You can go to home page to buy some food
+            </div>            
+          </div>  
+        )
+      }
       {orderItems.map((order, index) => (
         <div className="border-b-2">
           <div className="text-black font-bold mb-2">

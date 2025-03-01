@@ -57,7 +57,6 @@ const FoodItem = () => {
         </div>
         <div className="border-b-2">
           {cartItems.map((item) => {
-            // console.log(item);
             return (
               <div
                 key={item.id}
